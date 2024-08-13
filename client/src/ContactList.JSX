@@ -1,6 +1,8 @@
 import React from "react"
 
-const ConstactList = ({contacts}) => {
+const ContactList = ({ contacts }) => {
+
+
     return <div>
         <h2>Contacts</h2>
         <table>
@@ -13,14 +15,20 @@ const ConstactList = ({contacts}) => {
                 </tr>
             </thead>
             <tbody>
-                {contacts.map(contact => (
+                {contacts.map((contact) => (
                     <tr key={contact.id}>
                         <td>{contact.first_name}</td>
                         <td>{contact.last_name}</td>
                         <td>{contact.email}</td>
+                        <td>
+                            <button>Update</button>
+                            <button>Delete</button>
+                        </td>
                     </tr>
                 ))}
             </tbody>
         </table>
     </div>
 }
+
+export default ContactList

@@ -24,15 +24,15 @@ def create_contact():
 
     try:
         new_contact = Contact(
-            first_name=json_data("first_name"),
-            last_name=json_data("last_name"),
-            email=json_data("email")
+            first_name=json_data.get("first_name"),
+            last_name=json_data.get("last_name"),
+            email=json_data.get("email")
         )
     except ValueError as e:
         return {'errors': ['you must enter a first name, last name and email']}, 400
 
     db.session.add(new_contact)
-    db.session.commit(new_contact)
+    db.session.commit()
 
     return new_contact.to_dict(), 201
 
