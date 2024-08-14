@@ -6,6 +6,8 @@ import './App.css';
 
 function App() {
   const [contacts, setContacts] = useState([])
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [currentContact, setCurrentContact] = useState({})
 
   useEffect(() => {
     fetchContacts() // as soon as this component loads, it calls this function. After it calls the functions it passes the valuex in the state, useState hook: setContacts
@@ -18,10 +20,38 @@ function App() {
     console.log(data.contacts)
   }
 
+  const closeModal = () => {
+    setIsModalOpen(false)
+    setCurrentContact({})
+  }
+
+  const openCreateModal = () => {
+    if (!isModalOpen) setIsModalOpen(true)
+  }
+
+  const openEditModal = (contact) => {
+    if (isModalOpen) return
+    setCurrentContact(contact)
+    setIsModalOpen(true)
+  }
+
+  const onUpdate = () => {
+
+  }
+
   return (
     <>
-  <ContactList contacts={contacts} /> 
-  <ContactForm />  {/* This component will send data to our server */}
+  <ContactList contacts={contacts} updateContact={openEditModal} updateCallback={onUpdate}/> 
+
+  <button onClick={openCreateModal}>Create New Contact</button>
+  {isModalOpen && <div className='modal'>
+    <div className='modal-content'>
+      <span className='close' onClick={closeModal}>&times;</span>
+      <ContactForm existingContact={currentContact} updateCallback={onUpdate}/>  {/* This component will send data to our server */}
+    </div>
+  </div>
+
+  }
   </> 
   )
 }
